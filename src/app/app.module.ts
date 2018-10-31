@@ -3,11 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { HomeComponent } from './pages/home/home.component';
-import { TrainerComponent } from './pages/trainer/trainer.component';
-import { UserComponent } from './pages/user/user.component';
+import { HomeComponent,  LoginComponent, RegisterComponent, TrainerComponent, UserComponent } from './pages/index';
+import { HttpService, LocalStorageService, AuthenticationService, AlertService } from './services/index';
+import { AuthGuard } from './guards/index';
 
 @NgModule({
   declarations: [
@@ -22,7 +20,12 @@ import { UserComponent } from './pages/user/user.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    HttpService,
+    LocalStorageService,
+    AuthenticationService,
+    AlertService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
