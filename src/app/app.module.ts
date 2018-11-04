@@ -2,9 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
+import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helper/index';
+// import { routing } from './app.routing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
+// Components
 import { AppComponent } from './app.component';
 import { HomeComponent,  LoginComponent, RegisterComponent, TrainerComponent, UserComponent } from './pages/index';
-import { HttpService, LocalStorageService, AuthenticationService, AlertService } from './services/index';
+import { AlertComponent, FooterComponent, HeaderComponent } from './components/index';
+
+// Services
+import { HttpService, LocalStorageService, AuthenticationService, AlertService, UserService } from './services/index';
+
+// Guards
 import { AuthGuard } from './guards/index';
 
 @NgModule({
@@ -14,17 +27,28 @@ import { AuthGuard } from './guards/index';
     RegisterComponent,
     HomeComponent,
     TrainerComponent,
-    UserComponent
+    UserComponent,
+    AlertComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AngularFontAwesomeModule
   ],
   providers: [
+    AuthGuard,
     HttpService,
     LocalStorageService,
     AuthenticationService,
-    AlertService
+    AlertService,
+    // UserService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
