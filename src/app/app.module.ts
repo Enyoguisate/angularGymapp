@@ -11,7 +11,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 // Components
 import { AppComponent } from './app.component';
-import { HomeComponent,  LoginComponent, RegisterComponent, TrainerComponent, UserComponent } from './pages/index';
+import { HomeComponent,  LoginComponent, RegisterComponent, TrainerComponent, UserComponent, PageNotFoundComponent } from './pages/index';
 import { AlertComponent, FooterComponent, HeaderComponent } from './components/index';
 
 // Services
@@ -30,7 +30,8 @@ import { AuthGuard } from './guards/index';
     UserComponent,
     AlertComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
