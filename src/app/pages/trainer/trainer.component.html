@@ -1,6 +1,5 @@
 <form [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
-  <!-- <pre>{{trainerForm | json}}</pre> -->
-  <!-- <fieldset formGroupName="name"> -->
+  
   <div class="form-group">
     <label>First Name</label><span *ngIf="trainerForm.controls.firstName.dirty && !trainerForm.controls.firstName.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
     <input type="text" class="form-control" formControlName="firstName" required minlength="4">
@@ -12,37 +11,36 @@
   </div>
 
   <div class="form-group">
-    <label>Last Name</label>
-    <input type="text" class="form-control" formControlName="lastName" required>
+    <label>Last Name</label><span *ngIf="trainerForm.controls.lastName.dirty && !trainerForm.controls.lastName.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
+    <input type="text" class="form-control" formControlName="lastName" required  minlength="4">
+    <div *ngIf="trainerForm.controls.lastName && trainerForm.controls.lastName.errors && trainerForm.controls.lastName.dirty" class="alert alert-danger">
+        <div *ngIf="trainerForm.controls.lastName.errors && trainerForm.controls.lastName.errors.minlength.requiredLength > trainerForm.controls.lastName.errors.minlength.actualLength">
+            Name is required and must be at least 4 characters long.
+        </div>
+      </div>
   </div>
-  <!-- </fieldset> -->
 
-  <!-- <fieldset formGroupName="login"> -->
-  <!-- [ngClass]="{
-      'has-danger': email.invalid && email.dirty,
-      'has-success': email.valid && email.dirty
-    }" -->
   <div class="form-group">
-    <label>Email</label>
-    <input type="email" class="form-control" formControlName="email" required>
+    <label>Email</label><span *ngIf="trainerForm.controls.email.dirty && !trainerForm.controls.email.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
+    <input type="email" class="form-control" formControlName="email" required  minlength="4">
+    <div *ngIf="trainerForm.controls.email && trainerForm.controls.email.errors && trainerForm.controls.email.dirty" class="alert alert-danger">
+        <div *ngIf="trainerForm.controls.email.errors && trainerForm.controls.email.errors.minlength.requiredLength > trainerForm.controls.email.errors.minlength.actualLength">
+            Email is required and must be at least 4 characters long.
+        </div>
+      </div>
   </div>
 
 
-  <!-- [ngClass]="{
-      'has-danger': password.invalid && (password.dirty || password.touched),
-      'has-success': password.valid && (password.dirty || password.touched)
-    }" -->
   <div class="form-group">
-    <label>Password</label>
-    <input type="password" class="form-control" formControlName="password" required>
+    <label>Password</label><span *ngIf="trainerForm.controls.password.dirty && !trainerForm.controls.password.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
+    <input type="password" class="form-control" formControlName="password" required minlength="4">
+    <div *ngIf="trainerForm.controls.password && trainerForm.controls.password.errors && trainerForm.controls.password.dirty" class="alert alert-danger">
+        <div *ngIf="trainerForm.controls.password.errors && trainerForm.controls.password.errors.minlength.requiredLength > trainerForm.controls.password.errors.minlength.actualLength">
+            The password is required and must be at least 4 characters long.
+        </div>
+      </div>
   </div>
-  <!-- <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
-      <p *ngIf="password.errors.required">Password is required</p>
-      <p *ngIf="password.errors.minlength">Password must be {{password.errors.minlength.requiredLength}} characters long,
-        we need another {{password.errors.minlength.requiredLength - password.errors.minlength.actualLength}} characters
-      </p>
-    </div> -->
-  <!-- </fieldset> -->
+  
 
   <div class="form-group">
     <label>Language</label>
