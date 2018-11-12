@@ -1,53 +1,97 @@
-<form [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
-  
-  <div class="form-group">
-    <label>First Name</label><span *ngIf="trainerForm.controls.firstName.dirty && !trainerForm.controls.firstName.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
-    <input type="text" class="form-control" formControlName="firstName" required minlength="4">
-    <div *ngIf="trainerForm.controls.firstName && trainerForm.controls.firstName.errors && trainerForm.controls.firstName.dirty" class="alert alert-danger">
-      <div *ngIf="trainerForm.controls.firstName.errors && trainerForm.controls.firstName.errors.minlength.requiredLength > trainerForm.controls.firstName.errors.minlength.actualLength">
-          Name is required and must be at least 4 characters long.
-      </div>
+<h1>Trainer</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <h4>Nombre</h4>
+    <mat-form-field>
+      <select
+        matNativeControl
+        required
+        [placeholder]="!selectedTrainer ? 'Seleccionar nombre' : ''"
+        [(ngModel)]="selectedTrainer"
+        (ngModelChange)="onNameChange($event)"
+      >
+        <option
+          [value]="trainer.idTrainer"
+          *ngFor="let trainer of trainerDataToShow"
+          >{{ trainer.name }}</option
+        >
+      </select>
+    </mat-form-field>
+  </div>
+
+  <div class="col-md-6">
+    <h4>Actividad</h4>
+    <mat-form-field *ngIf="activitiesToShow && activitiesToShow.length != 0">
+      <select
+        matNativeControl
+        required
+        [placeholder]="!selectedActivity ? 'Seleccionar Actividad' : ''"
+        [(ngModel)]="selectedActivity"
+        (ngModelChange)="onActivityChange($event)"
+      >
+        <option
+          [value]="activity.idActivity"
+          *ngFor="let activity of activitiesToShow"
+          >{{ activity.value }}</option
+        >
+      </select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-6">
+    <h4>Dia</h4>
+    <div *ngIf="!dateSelected">
+      <!-- verificar date selected -->
+      <input
+        type="date"
+        [(ngModel)]="dateSelected"
+        (input)="dateChange($event)"
+        name="bday"
+        *ngIf="activitySelected"
+      />
     </div>
   </div>
-
-  <div class="form-group">
-    <label>Last Name</label><span *ngIf="trainerForm.controls.lastName.dirty && !trainerForm.controls.lastName.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
-    <input type="text" class="form-control" formControlName="lastName" required  minlength="4">
-    <div *ngIf="trainerForm.controls.lastName && trainerForm.controls.lastName.errors && trainerForm.controls.lastName.dirty" class="alert alert-danger">
-        <div *ngIf="trainerForm.controls.lastName.errors && trainerForm.controls.lastName.errors.minlength.requiredLength > trainerForm.controls.lastName.errors.minlength.actualLength">
-            Name is required and must be at least 4 characters long.
-        </div>
-      </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h4>Hora</h4>
+    <mat-form-field *ngIf="shiftDataToShow && shiftDataToShow.length != 0">
+      <select matNativeControl [placeholder]="!hourSelected ? 'Seleccionar Hora' : ''"
+        [(ngModel)]="hourSelected" required (ngModelChange)="onHourChange($event)">
+        <option [value]="shiftHour.idShift" *ngFor="let shiftHour of shiftDataToShow">{{ shiftHour.time }}</option>
+      </select>
+    </mat-form-field>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <mat-accordion *ngIf="trainerInformationSelected">
+        <!-- <mat-accordion *ngIf="false"> -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{shiftInformation.trainerName}} </mat-panel-title>
+          <mat-panel-description>
+            {{shiftInformation.shiftName}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
-  <div class="form-group">
-    <label>Email</label><span *ngIf="trainerForm.controls.email.dirty && !trainerForm.controls.email.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
-    <input type="email" class="form-control" formControlName="email" required  minlength="4">
-    <div *ngIf="trainerForm.controls.email && trainerForm.controls.email.errors && trainerForm.controls.email.dirty" class="alert alert-danger">
-        <div *ngIf="trainerForm.controls.email.errors && trainerForm.controls.email.errors.minlength.requiredLength > trainerForm.controls.email.errors.minlength.actualLength">
-            Email is required and must be at least 4 characters long.
-        </div>
-      </div>
+        <mat-form-field>
+          <input matInput placeholder="Cupo" disabled="true"/>
+        </mat-form-field>
+        <mat-form-field>
+            <!-- <mat-label></mat-label> -->
+            <input matInput [value]="shiftInformation.quota" disabled="true">
+          </mat-form-field>
+      </mat-expansion-panel>
+      <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" > -->
+        <!-- <mat-expansion-panel-header>
+          <mat-panel-title> Self aware panel </mat-panel-title>
+          <mat-panel-description>
+            Currently I am {{ panelOpenState ? "open" : "closed" }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel> -->
+    </mat-accordion>
   </div>
-
-
-  <div class="form-group">
-    <label>Password</label><span *ngIf="trainerForm.controls.password.dirty && !trainerForm.controls.password.errors"><i class="fa fa-check" aria-hidden="true"></i></span>
-    <input type="password" class="form-control" formControlName="password" required minlength="4">
-    <div *ngIf="trainerForm.controls.password && trainerForm.controls.password.errors && trainerForm.controls.password.dirty" class="alert alert-danger">
-        <div *ngIf="trainerForm.controls.password.errors && trainerForm.controls.password.errors.minlength.requiredLength > trainerForm.controls.password.errors.minlength.actualLength">
-            The password is required and must be at least 4 characters long.
-        </div>
-      </div>
-  </div>
-  
-
-  <div class="form-group">
-    <label>Language</label>
-    <select class="form-control">
-      <option value="">Please select a language</option>
-    </select>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-
-</form>
+</div>

@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder
-} from "@angular/forms";
+import { TRAINER_DATA, ACTIVITY_DATA, SHIFT_DATA } from "./trainer-data";
+import * as moment from 'moment';
 
 @Component({
   selector: "app-trainer",
@@ -12,87 +8,118 @@ import {
   styleUrls: ["./trainer.component.css"]
 })
 export class TrainerComponent implements OnInit {
-  langs: string[] = ["English", "French", "German"];
+  panelOpenState = false;
 
-  constructor() {}
-  // trainerModel: TrainerModel = {
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   password: ""
-  // };
-  trainerForm: FormGroup;
-  firstName: FormControl;
-  lastName: FormControl;
-  email: FormControl;
-  password: FormControl;
-  language: FormControl;
-  // trainerFormErrors: any =  {
-  //   firstName: { 
-  //     error: false,
-  //     empty: false
-  //   },
-  //   lastName: {
-  //     error: false,
-  //     empty: false
-  //   },
-  //   email: {
-  //     error: false,
-  //     empty: false
-  //   },
-  //   password: {
-  //     error: false,
-  //     empty: false
-  //   },
-  // };
+  private trainerData: Trainer[] = TRAINER_DATA;
+  private activityData: Activity[] = ACTIVITY_DATA;
+  private shiftData: Shift[] = SHIFT_DATA;
+  private previousSelectedTrainer: number;
+  private previousSelectedActivity: number;
+  private shiftSelected: number;
+  private activityId: number;
+  public trainerDataToShow: Trainer[] = [];
+  public activitiesToShow: Activity[] = [];
+  public shiftDataToShow: Shift[] = [];
+  public selectedActivity: Activity;
+  public selectedTrainer: Trainer;
+  public activitySelected: boolean = false;
+  public dateSelected: string = '';
+  public selectedDate: boolean = false;
+  public trainerInformationSelected: boolean = false;
+  public shiftInformation;
+  private activity: Activity;
+  private trainer: Trainer;
+  private shift: Shift;
 
-  ngOnInit() {
-    this.buildForm().subscribe((change) => {
-      // console.log('change', change);
-    });
+  constructor() {
+    this.trainerDataToShow = this.trainerData && this.trainerData.length ? this.trainerData : [];
   }
 
-  buildForm() {
-    this.trainerForm = new FormGroup({
-      // name: new FormGroup({
-        firstName: new FormControl(),
-        lastName: new FormControl(),
-      // }),
-      // login: new FormGroup({
-        email: new FormControl(),
-        password: new FormControl(),
-      // }),
-      language: new FormControl()
-    });
-    return this.trainerForm.valueChanges;
-  }
+  ngOnInit() {}
 
-  createFormControls() {
-    this.firstName = new FormControl("", Validators.required);
-    this.lastName = new FormControl("", Validators.required);
-    this.email = new FormControl("", [
-      Validators.required,
-      Validators.pattern("[^ @]*@[^ @]*")
-    ]);
-    this.password = new FormControl("", [
-      Validators.required,
-      Validators.minLength(8)
-    ]);
-    this.language = new FormControl("", Validators.required);
-  }
-
-  onSubmit() {
-    console.log("this.trainerForm", this.trainerForm);
-    if (this.trainerForm.valid) {
-      console.log("Form Submitted!");
-      console.log(this.trainerForm.value);
-      // this.trainerForm.reset();
+  onNameChange(trainerId: number) {
+    if(this.previousSelectedTrainer != +trainerId){
+      this.clearAllSelectedValuesOfTrainerName();
+      this.previousSelectedTrainer = +trainerId;
+      this.trainer = this.trainerDataToShow.find((trainer: Trainer) => trainer.idTrainer === +trainerId);
+      this.activityData.forEach((activity: Activity) => { activity.idTrainer === +trainerId ? this.activitiesToShow.push(activity) : null;});
     }
   }
+  
+  clearAllSelectedValuesOfTrainerName(){
+    this.activitySelected = false;
+    this.clearAllSelectedValuesOfActivity();
+  }
+
+  onActivityChange(activityId: number) {
+    if(this.previousSelectedActivity != +activityId){
+      this.previousSelectedActivity = +activityId;
+      this.activityId = activityId;
+      this.activity = this.activitiesToShow.find((activity:Activity)=> activity.idActivity === +this.activityId);
+      this.activitySelected = true;
+    }
+  }
+  
+  clearAllSelectedValuesOfActivity(){
+    this.selectedDate = false;
+    this.dateSelected = '';
+    // verificar date selected
+    this.shiftDataToShow = [];
+    this.activitiesToShow = [];
+    this.selectedActivity = {};
+    this.trainer = {};
+    this.activity = {};
+    this.shift = {};
+  }
+
+  
+  dateChange(dateSel: any){
+    this.shiftDataToShow = [];
+    this.selectedDate = true;
+    this.shiftData.forEach((shift: Shift) => {
+      shift.date.endsWith(moment(this.dateSelected).format('DD-MM-YY').toString()) && 
+      shift.idActivity === +this.activityId ? this.shiftDataToShow.push(shift) : null;
+    });
+  }
+
+  onHourChange(shiftId: number){
+    this.shiftSelected = shiftId;
+    this.shift = this.shiftDataToShow.find((shift: Shift) => shift.idShift === +shiftId);
+    this.setShiftInformation();
+  }
+
+  setShiftInformation(){
+    this.shiftInformation = {
+      trainerName: this.trainer.name,
+      shiftName: this.activity ? this.activity.value : '',
+      quota: this.shift.quotaLeft + " / " + this.shift.maxQuota
+    }
+    this.trainerInformationSelected = true;
+  }
+
+
 }
 
-export interface TrainerModel{
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;}
+export interface Trainer {
+  id?: number;
+  idTrainer?: number;
+  name?: string;
+}
+
+export interface Activity {
+  id?: number;
+  idActivity?: number;
+  idTrainer?: number;
+  name?: string;
+  value?: string;
+}
+
+export interface Shift {
+  id?: number;
+  idShift?: number;
+  idActivity?: number;
+  date?: string;
+  time?: string;
+  maxQuota?: number;
+  quotaLeft?: number;
+}

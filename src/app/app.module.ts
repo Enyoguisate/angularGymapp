@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, 
+  MatExpansionPanelDescription, MatFormField, MatInput, MatExpansionModule, MatMenuModule, MatCardModule, MatIconModule, MatLineModule, MatListModule, MatSortModule, MatTabsModule, MatTreeModule, MatBadgeModule, MatChipsModule, MatInputModule, MatRadioModule, MatTableModule, MatButtonModule, MatCommonModule, MatDialogModule, MatOptionModule, MatRippleModule, MatSelectModule, MatSliderModule, MatDividerModule, MatSidenavModule, MatStepperModule, MatToolbarModule, MatTooltipModule, MatCheckboxModule, MatGridListModule, MatSnackBarModule, MatFormFieldModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatBottomSheetModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatButtonToggleModule, MatPseudoCheckboxModule, MatProgressSpinnerModule, MAT_DATE_LOCALE } from '@angular/material';
+import * as moment from 'moment';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -37,8 +41,51 @@ import { AuthGuard } from './guards/index';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    BrowserAnimationsModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatCardModule,
+    MatIconModule,
+    MatLineModule,
+    MatListModule,
+    MatSortModule,
+    MatTabsModule,
+    MatBadgeModule,
+    MatChipsModule,
+    MatInputModule,
+    MatRadioModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCommonModule,
+    MatDialogModule,
+    MatOptionModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatDividerModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatStepperModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatGridListModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatBottomSheetModule,
+    MatProgressBarModule,
+    MatSlideToggleModule,
+    MatAutocompleteModule, 
+    MatButtonToggleModule,
+    MatPseudoCheckboxModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthGuard,
@@ -49,6 +96,7 @@ import { AuthGuard } from './guards/index';
     // UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-AR'},
     fakeBackendProvider
   ],
   bootstrap: [AppComponent]

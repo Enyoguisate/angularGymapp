@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from './services/index';
 import { User } from './interfaces/index';
+import 'hammerjs';
 
 @Component({
   selector: 'app-root',
