@@ -1,4 +1,5 @@
 import { Trainer, Activity, Shift } from "./trainer.component";
+import { User } from "src/app/interfaces";
 
 export const TRAINER_DATA: Trainer[] = [
   { id: 1, idTrainer: 1, name: "Pepe" },
@@ -53,4 +54,41 @@ export const SHIFT_DATA: Shift[] = [
     { id: 24, idShift: 24, idActivity: 6, date: "20-11-18", time: "10:00 - 11:00", maxQuota: 30, quotaLeft: 7 },
     { id: 25, idShift: 25, idActivity: 5, date: "20-11-18", time: "11:00 - 12:00", maxQuota: 30, quotaLeft: 20 },
     { id: 26, idShift: 26, idActivity: 4, date: "20-11-18", time: "12:00 - 13:00", maxQuota: 30, quotaLeft: 19 },
+];
+
+
+export const USERS_DATA: User[] = [
+  { username: "pepe", password: "asdasd123", id: 0,    firstName: "pepe",     lastName: "pepon", token: "fake-jwt-token" },
+  { username: "pepe1", password: "asdasd123", id: 1,   firstName: "roberto",  lastName: "perez", token: "fake-jwt-token" },
+  { username: "pepe2", password: "asdasd123", id: 2,   firstName: "juan",     lastName: "javier", token: "fake-jwt-token" },
+  { username: "pepe3", password: "asdasd123", id: 3,   firstName: "jose",     lastName: "gorosito", token: "fake-jwt-token" },
+  { username: "pepe4", password: "asdasd123", id: 4,   firstName: "jimena",   lastName: "alvarez", token: "fake-jwt-token" },
+  { username: "pepe5", password: "asdasd123", id: 5,   firstName: "marcela",  lastName: "martinez", token: "fake-jwt-token" },
+  { username: "pepe6", password: "asdasd123", id: 6,   firstName: "julia",    lastName: "garcia", token: "fake-jwt-token" },
+  { username: "pepe7", password: "asdasd123", id: 7,   firstName: "camila",   lastName: "estevez", token: "fake-jwt-token" },
+  { username: "pepe8", password: "asdasd123", id: 8,   firstName: "lourdes",  lastName: "martin", token: "fake-jwt-token" },
+  { username: "pepe9", password: "asdasd123", id: 9,   firstName: "ailen",    lastName: "pepon", token: "fake-jwt-token" },
+  { username: "pepe10", password: "asdasd123", id: 10, firstName: "ailin",    lastName: "perez", token: "fake-jwt-token" },
+  { username: "pepe11", password: "asdasd123", id: 11, firstName: "carolina", lastName: "javier", token: "fake-jwt-token" },
+  { username: "pepe12", password: "asdasd123", id: 12, firstName: "jonatan",  lastName: "gorosito", token: "fake-jwt-token" },
+  { username: "pepe13", password: "asdasd123", id: 13, firstName: "ana",      lastName: "alvarez", token: "fake-jwt-token" },
+  { username: "pepe14", password: "asdasd123", id: 14, firstName: "leo",      lastName: "martinez", token: "fake-jwt-token" },
+  { username: "pepe15", password: "asdasd123", id: 15, firstName: "leandro",  lastName: "garcia", token: "fake-jwt-token" },
+  { username: "pepe16", password: "asdasd123", id: 16, firstName: "martin",   lastName: "estevez", token: "fake-jwt-token" },
+  { username: "pepe17", password: "asdasd123", id: 17, firstName: "jairo",    lastName: "martin", token: "fake-jwt-token" },
+  { username: "pepe18", password: "asdasd123", id: 18, firstName: "ruben",    lastName: "pepon", token: "fake-jwt-token" },
+  { username: "pepe19", password: "asdasd123", id: 19, firstName: "mariano",  lastName: "perez", token: "fake-jwt-token" },
+  { username: "pepe20", password: "asdasd123", id: 20, firstName: "esteban",  lastName: "javier", token: "fake-jwt-token" },
+  { username: "pepe21", password: "asdasd123", id: 21, firstName: "fausto",   lastName: "gorosito", token: "fake-jwt-token" },
+  { username: "pepe22", password: "asdasd123", id: 22, firstName: "romina",   lastName: "pepon", token: "fake-jwt-token" },
+  { username: "pepe23", password: "asdasd123", id: 23, firstName: "sandra",   lastName: "perez", token: "fake-jwt-token" },
+  { username: "pepe24", password: "asdasd123", id: 24, firstName: "aldana",   lastName: "javier", token: "fake-jwt-token" },
+  { username: "pepe25", password: "asdasd123", id: 25, firstName: "maria",    lastName: "gorosito", token: "fake-jwt-token" },
+  { username: "pepe26", password: "asdasd123", id: 26, firstName: "carlos",   lastName: "alvarez", token: "fake-jwt-token" },
+  { username: "pepe27", password: "asdasd123", id: 27, firstName: "maximo",   lastName: "martinez", token: "fake-jwt-token" },
+  { username: "pepe28", password: "asdasd123", id: 28, firstName: "emilia",   lastName: "garcia", token: "fake-jwt-token" },
+  { username: "pepe29", password: "asdasd123", id: 29, firstName: "juana",    lastName: "estevez", token: "fake-jwt-token" },
+  { username: "pepe30", password: "asdasd123", id: 30, firstName: "paco",     lastName: "martin", token: "fake-jwt-token" },
+  
+
 ]

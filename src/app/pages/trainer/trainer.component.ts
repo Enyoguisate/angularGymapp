@@ -1,6 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { TRAINER_DATA, ACTIVITY_DATA, SHIFT_DATA } from "./trainer-data";
-import * as moment from 'moment';
+import {
+  TRAINER_DATA,
+  ACTIVITY_DATA,
+  SHIFT_DATA,
+  USERS_DATA
+} from "./trainer-data";
+import * as moment from "moment";
+import { User } from "src/app/interfaces";
 
 @Component({
   selector: "app-trainer",
@@ -13,6 +19,8 @@ export class TrainerComponent implements OnInit {
   private trainerData: Trainer[] = TRAINER_DATA;
   private activityData: Activity[] = ACTIVITY_DATA;
   private shiftData: Shift[] = SHIFT_DATA;
+  private userData: User[] = USERS_DATA;
+  private usersDataToShow: string[] = [];
   private previousSelectedTrainer: number;
   private previousSelectedActivity: number;
   private shiftSelected: number;
@@ -23,7 +31,7 @@ export class TrainerComponent implements OnInit {
   public selectedActivity: Activity;
   public selectedTrainer: Trainer;
   public activitySelected: boolean = false;
-  public dateSelected: string = '';
+  public dateSelected: string = "";
   public selectedDate: boolean = false;
   public trainerInformationSelected: boolean = false;
   public shiftInformation;
@@ -32,38 +40,46 @@ export class TrainerComponent implements OnInit {
   private shift: Shift;
 
   constructor() {
-    this.trainerDataToShow = this.trainerData && this.trainerData.length ? this.trainerData : [];
+    this.trainerDataToShow =
+      this.trainerData && this.trainerData.length ? this.trainerData : [];
   }
 
   ngOnInit() {}
 
   onNameChange(trainerId: number) {
-    if(this.previousSelectedTrainer != +trainerId){
+    if (this.previousSelectedTrainer != +trainerId) {
       this.clearAllSelectedValuesOfTrainerName();
       this.previousSelectedTrainer = +trainerId;
-      this.trainer = this.trainerDataToShow.find((trainer: Trainer) => trainer.idTrainer === +trainerId);
-      this.activityData.forEach((activity: Activity) => { activity.idTrainer === +trainerId ? this.activitiesToShow.push(activity) : null;});
+      this.trainer = this.trainerDataToShow.find(
+        (trainer: Trainer) => trainer.idTrainer === +trainerId
+      );
+      this.activityData.forEach((activity: Activity) => {
+        activity.idTrainer === +trainerId
+          ? this.activitiesToShow.push(activity)
+          : null;
+      });
     }
   }
-  
-  clearAllSelectedValuesOfTrainerName(){
+
+  clearAllSelectedValuesOfTrainerName() {
     this.activitySelected = false;
     this.clearAllSelectedValuesOfActivity();
   }
 
   onActivityChange(activityId: number) {
-    if(this.previousSelectedActivity != +activityId){
+    if (this.previousSelectedActivity != +activityId) {
       this.previousSelectedActivity = +activityId;
       this.activityId = activityId;
-      this.activity = this.activitiesToShow.find((activity:Activity)=> activity.idActivity === +this.activityId);
+      this.activity = this.activitiesToShow.find(
+        (activity: Activity) => activity.idActivity === +this.activityId
+      );
       this.activitySelected = true;
     }
   }
-  
-  clearAllSelectedValuesOfActivity(){
+
+  clearAllSelectedValuesOfActivity() {
     this.selectedDate = false;
-    this.dateSelected = '';
-    // verificar date selected
+    this.dateSelected = "";
     this.shiftDataToShow = [];
     this.activitiesToShow = [];
     this.selectedActivity = {};
@@ -72,32 +88,52 @@ export class TrainerComponent implements OnInit {
     this.shift = {};
   }
 
-  
-  dateChange(dateSel: any){
+  dateChange(dateSel: any) {
     this.shiftDataToShow = [];
     this.selectedDate = true;
     this.shiftData.forEach((shift: Shift) => {
-      shift.date.endsWith(moment(this.dateSelected).format('DD-MM-YY').toString()) && 
-      shift.idActivity === +this.activityId ? this.shiftDataToShow.push(shift) : null;
+      shift.date.endsWith(
+        moment(this.dateSelected)
+          .format("DD-MM-YY")
+          .toString()
+      ) && shift.idActivity === +this.activityId
+        ? this.shiftDataToShow.push(shift)
+        : null;
     });
   }
 
-  onHourChange(shiftId: number){
+  onHourChange(shiftId: number) {
     this.shiftSelected = shiftId;
-    this.shift = this.shiftDataToShow.find((shift: Shift) => shift.idShift === +shiftId);
+    this.shift = this.shiftDataToShow.find(
+      (shift: Shift) => shift.idShift === +shiftId
+    );
+    this.getUsersArray();
     this.setShiftInformation();
   }
 
-  setShiftInformation(){
+  setShiftInformation() {
     this.shiftInformation = {
       trainerName: this.trainer.name,
-      shiftName: this.activity ? this.activity.value : '',
-      quota: this.shift.quotaLeft + " / " + this.shift.maxQuota
-    }
+      shiftName: this.activity ? this.activity.value : "",
+      quota: this.shift.quotaLeft + " / " + this.shift.maxQuota,
+      users: this.usersDataToShow
+    };
     this.trainerInformationSelected = true;
   }
 
+  getUsersArray() {
+    for (let index = 0; index < +this.shift.quotaLeft; index++) {
+      let counterLimit = Math.floor(Math.random() * +this.shift.quotaLeft) + 1;
+      this.usersDataToShow.push(this.userData[counterLimit].firstName + " " + this.userData[counterLimit].lastName);
+    }
+  }
+}
 
+export interface ShiftInformation {
+  trainerName: string;
+  shiftName: string;
+  quota: string;
+  users: string[];
 }
 
 export interface Trainer {
