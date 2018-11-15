@@ -1,5 +1,4 @@
-import { Trainer, Activity, Shift } from "./trainer.component";
-import { User } from "src/app/interfaces";
+import { Trainer, Activity, Activities, Shift, User } from "../interfaces/index";
 
 export const TRAINER_DATA: Trainer[] = [
   { id: 1, idTrainer: 1, name: "Pepe" },
@@ -9,7 +8,7 @@ export const TRAINER_DATA: Trainer[] = [
   { id: 5, idTrainer: 5, name: "Roberto" }
 ];
 
-export const ACTIVITY_DATA: Activity[] = [
+export const ACTIVITIES_DATA: Activities[] = [
   { id: 1, idActivity: 1, idTrainer: 1, name: "spinning", value: "Spinning" },
   { id: 2, idActivity: 2, idTrainer: 1, name: "zumba", value: "Zumba" },
   { id: 3, idActivity: 3, idTrainer: 1, name: "bodyjump", value: "Body Jump" },
@@ -26,6 +25,13 @@ export const ACTIVITY_DATA: Activity[] = [
   { id: 14, idActivity: 14, idTrainer: 5, name: "spinning", value: "Spinning" },
   { id: 15, idActivity: 15, idTrainer: 5, name: "bodyjump", value: "Body Jump" }
 ];
+
+export const ACTIVITY_DATA: Activity[] = [
+  { id: 1, idActivity: 1, name: "Spinning" },
+  { id: 2, idActivity: 2, name: "Zumba" },
+  { id: 3, idActivity: 3, name: "Body Jump" },
+  { id: 4, idActivity: 4, name: "CrossFit" },
+]
 
 export const SHIFT_DATA: Shift[] = [
     { id: 1, idShift: 1, idActivity: 1, date: "15-11-18", time: "08:00 - 09:00", maxQuota: 30, quotaLeft: 20 },

@@ -1,3 +1,60 @@
-<p>
-  user works!
-</p>
+<div id="user-component">
+  <div class="row">
+    <div class="col-md-6" text-center>
+      <h4>Actividades</h4>
+      <mat-form-field>
+          <select matNativeControl required 
+          [placeholder]="!selectedActivity ? 'Seleccionar actividad' : ''"
+          [(ngModel)]="selectedActivity" 
+          (ngModelChange)="onActivityChange($event)">
+            <option [value]="activity.idActivity" 
+            *ngFor="let activity of activitiesToShow">
+              {{ activity.name }}
+            </option>
+          </select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-12">
+      <div>
+        <input type="date" [(ngModel)]="activityDateSelected" (input)="dateChange($event)" name="activityDate" />
+      </div>
+      <div *ngIf=" activityDate && activitiesAvailable && activitiesAvailable.length === 0 ">
+        <p>No hay horarios disponibles para esta fecha</p>
+      </div>
+      <div>
+        <mat-accordion *ngIf="activitiesAvailable && activitiesAvailable.length != 0">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                shiftInformation.trainerName
+              </mat-panel-title>
+              <mat-panel-description>
+                shiftInformation.shiftName
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-form-field>
+              <input matInput placeholder="Actividad" disabled="true" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                [value]="shiftInformation.quota"
+                disabled="true"
+              />
+            </mat-form-field>
+
+            <mat-list role="list">
+              <mat-list-item
+                role="listitem"
+                *ngFor="let userShift of shiftInformation.users"
+                >{{ userShift }}</mat-list-item
+              >
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>

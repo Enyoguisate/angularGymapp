@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import {
   TRAINER_DATA,
-  ACTIVITY_DATA,
+  ACTIVITIES_DATA,
   SHIFT_DATA,
   USERS_DATA
-} from "./trainer-data";
+} from "../../_helper/trainer-data";
 import * as moment from "moment";
-import { User } from "src/app/interfaces";
+import { Trainer, Activity, Activities, Shift, User } from "../../interfaces/index";
 
 @Component({
   selector: "app-trainer",
@@ -17,7 +17,7 @@ export class TrainerComponent implements OnInit {
   panelOpenState = false;
 
   private trainerData: Trainer[] = TRAINER_DATA;
-  private activityData: Activity[] = ACTIVITY_DATA;
+  private activityData: Activities[] = ACTIVITIES_DATA;
   private shiftData: Shift[] = SHIFT_DATA;
   private userData: User[] = USERS_DATA;
   private usersDataToShow: string[] = [];
@@ -26,16 +26,16 @@ export class TrainerComponent implements OnInit {
   private shiftSelected: number;
   private activityId: number;
   public trainerDataToShow: Trainer[] = [];
-  public activitiesToShow: Activity[] = [];
+  public activitiesToShow: Activities[] = [];
   public shiftDataToShow: Shift[] = [];
-  public selectedActivity: Activity;
+  public selectedActivity: Activities;
   public selectedTrainer: Trainer;
   public activitySelected: boolean = false;
   public dateSelected: string = "";
   public selectedDate: boolean = false;
   public trainerInformationSelected: boolean = false;
   public shiftInformation;
-  private activity: Activity;
+  private activity: Activities;
   private trainer: Trainer;
   private shift: Shift;
 
@@ -53,7 +53,7 @@ export class TrainerComponent implements OnInit {
       this.trainer = this.trainerDataToShow.find(
         (trainer: Trainer) => trainer.idTrainer === +trainerId
       );
-      this.activityData.forEach((activity: Activity) => {
+      this.activityData.forEach((activity: Activities) => {
         activity.idTrainer === +trainerId
           ? this.activitiesToShow.push(activity)
           : null;
@@ -129,33 +129,12 @@ export class TrainerComponent implements OnInit {
   }
 }
 
-export interface ShiftInformation {
-  trainerName: string;
-  shiftName: string;
-  quota: string;
-  users: string[];
-}
 
-export interface Trainer {
-  id?: number;
-  idTrainer?: number;
-  name?: string;
-}
 
-export interface Activity {
-  id?: number;
-  idActivity?: number;
-  idTrainer?: number;
-  name?: string;
-  value?: string;
-}
 
-export interface Shift {
-  id?: number;
-  idShift?: number;
-  idActivity?: number;
-  date?: string;
-  time?: string;
-  maxQuota?: number;
-  quotaLeft?: number;
-}
+
+
+
+
+
+

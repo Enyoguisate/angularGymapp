@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ACTIVITY_DATA } from '../../_helper/trainer-data';
+import { Activity, Activities } from "../../interfaces/index";
 
 @Component({
   selector: 'app-user',
@@ -7,9 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  public activityData: Activity[] = ACTIVITY_DATA;
+  public activitiesToShow: Activity[] = [];
+  public activityDateSelected: string = '';
+  public activitiesAvailable: Activities[] = [];
+  public selectedActivity: Activity = {};
+
+
+  constructor(
+
+  ) { 
+    this.activitiesToShow = this.activityData;
+  }
 
   ngOnInit() {
+  }
+
+  dateChange($event){
+    console.log('$event', $event);
+  }
+
+  onActivityChange($event){
+    console.log('$event', $event);
   }
 
 }
