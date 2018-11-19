@@ -3,54 +3,105 @@
     <div class="col-md-6" text-center>
       <h4>Actividades</h4>
       <mat-form-field>
-          <select matNativeControl required 
+        <select
+          matNativeControl
+          required
           [placeholder]="!selectedActivity ? 'Seleccionar actividad' : ''"
-          [(ngModel)]="selectedActivity" 
-          (ngModelChange)="onActivityChange($event)">
-            <option [value]="activity.idActivity" 
-            *ngFor="let activity of activitiesToShow">
-              {{ activity.name }}
-            </option>
-          </select>
-        </mat-form-field>
+          [(ngModel)]="selectedActivity"
+          (ngModelChange)="onActivityChange($event)"
+        >
+          <option
+            [value]="activity.idActivity"
+            *ngFor="let activity of activitiesToShow"
+          >
+            {{ activity.name }}
+          </option>
+        </select>
+      </mat-form-field>
     </div>
     <div class="col-md-12">
       <div>
-        <input type="date" [(ngModel)]="activityDateSelected" (input)="dateChange($event)" name="activityDate" />
+        <input
+          type="date"
+          [(ngModel)]="activityDateSelected"
+          (input)="onDateChange($event)"
+          name="activityDate"
+        />
       </div>
-      <div *ngIf=" activityDate && activitiesAvailable && activitiesAvailable.length === 0 ">
+      <div
+        *ngIf="
+          activityDate &&
+          activitiesAvailable &&
+          activitiesAvailable.length === 0
+        "
+      >
         <p>No hay horarios disponibles para esta fecha</p>
       </div>
       <div>
-        <mat-accordion *ngIf="activitiesAvailable && activitiesAvailable.length != 0">
+        <!--
+          showScheduledClasses && activitiesAvailable && activitiesAvailable.length != 0
+        -->
+        <mat-accordion
+          *ngIf="
+            showScheduledClasses &&
+            activitiesAvailable &&
+            activitiesAvailable.length != 0
+          "
+        >
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              <mat-panel-title>
-                shiftInformation.trainerName
-              </mat-panel-title>
+              <mat-panel-title> Horarios </mat-panel-title>
               <mat-panel-description>
-                shiftInformation.shiftName
+                (click para seleccionar un horario)
               </mat-panel-description>
             </mat-expansion-panel-header>
+            <div class="row">
+              <div class="col-md-3">
+                <mat-form-field>
+                  <input matInput placeholder="Horario" disabled="true" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <!-- [value]="Nombre Actividad" -->
+                <mat-form-field>
+                  <input matInput placeholder="Inscriptos" disabled="true" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field>
+                  <input matInput placeholder="Inscribirme" disabled="true" />
+                </mat-form-field>
+              </div>
+            </div>
 
-            <mat-form-field>
-              <input matInput placeholder="Actividad" disabled="true" />
-            </mat-form-field>
-
-            <mat-form-field>
-              <input
-                matInput
-                [value]="shiftInformation.quota"
-                disabled="true"
-              />
-            </mat-form-field>
-
+            <!-- *ngFor="let userShift of shiftInformation.users" -->
             <mat-list role="list">
               <mat-list-item
                 role="listitem"
-                *ngFor="let userShift of shiftInformation.users"
-                >{{ userShift }}</mat-list-item
+                *ngFor="let shift of activitiesAvailable"
               >
+                <div class="row">
+                  <div class="col-md-6">{{ shift.time }}</div>
+
+                  <div class="col-md-4">
+                    {{ shift.maxQuota + shift.quotaLeft - shift.maxQuota }} /
+                    {{ shift.maxQuota }}
+                  </div>
+                  <!--
+                    {{shift.quotaLeft}}
+                    {{shift.maxQuota}}
+                  -->
+                  <div class="col-md-2">
+                    <span
+                      ><i
+                        class="fa fa-plus"
+                        aria-hidden="true"
+                        (click)="selectSchedule(shift)"
+                      ></i
+                    ></span>
+                  </div>
+                </div>
+              </mat-list-item>
             </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
