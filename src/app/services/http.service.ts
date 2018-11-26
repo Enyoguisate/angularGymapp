@@ -12,15 +12,11 @@ import { map } from 'rxjs/operators';
   providedIn: "root"
 })
 export class HttpService {
+
+  
   private token: string;
-  private httpHeaders = new HttpHeaders({
-    "Content-Type": "application/json",
-    Accept: "application/json"
-  });
-  private headers = new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json"
-  });
+  private httpHeaders = new HttpHeaders({"Content-Type": "application/json",Accept: "application/json"});
+  private headers = new Headers({"Content-Type": "application/json",Accept: "application/json"});
   private options: HttpParamsOptions;
 
   constructor(

@@ -1,29 +1,47 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-import { User } from '../interfaces/index';
+import { User } from "../interfaces/index";
+import { HttpParamsOptions } from "@angular/common/http/src/params";
+import { Observable } from "rxjs/internal/Observable";
+import { map } from "rxjs/operators";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class UserService {
-    constructor(private http: HttpClient) { }
+  public url: string = `http://www.invictusgym.com.ar/consultas/get_all_alumnos.php`;
+  public httpHeaders: HttpHeaders = new HttpHeaders({
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  });
 
-    getAll() {
-        return this.http.get<User[]>(`http://localhost:4000/users`);
-    }
+  constructor(private httpClient: HttpClient) {}
 
-    getById(id: number) {
-        return this.http.get(`http://localhost:4000/users/${id}`);
-    }
+  getUsers(params?: any): Observable<any> {
+      console.log('getUsers', );
+      return this.httpClient.get(this.url, {headers: this.httpHeaders})
+      .pipe(map((response: Response) => {
+          console.log("getUsers map => response", response);
+          return response;
+        })
+      );
+  }
 
-    register(user: User) {
-        return this.http.post(`http://localhost:4000/users/register`, user);
-    }
+  getAll() {
+    return this.httpClient.get<User[]>(`http://localhost:4000/`);
+  }
+  getById(id: number) {
+    return this.httpClient.get(`http://localhost:4000/users/${id}`);
+  }
 
-    update(user: User) {
-        return this.http.put(`http://localhost:4000/users/${user.id}`, user);
-    }
+  register(user: User) {
+    return this.httpClient.post(`http://localhost:4000/users/register`, user);
+  }
 
-    delete(id: number) {
-        return this.http.delete(`http://localhost:4000/users/${id}`);
-    }
+  update(user: User) {
+    return this.httpClient.put(`http://localhost:4000/users/${user.id}`, user);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete(`http://localhost:4000/users/${id}`);
+  }
 }

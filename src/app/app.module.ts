@@ -4,8 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, 
-  MatExpansionPanelDescription, MatFormField, MatInput, MatExpansionModule, MatMenuModule, MatCardModule, MatIconModule, MatLineModule, MatListModule, MatSortModule, MatTabsModule, MatTreeModule, MatBadgeModule, MatChipsModule, MatInputModule, MatRadioModule, MatTableModule, MatButtonModule, MatCommonModule, MatDialogModule, MatOptionModule, MatRippleModule, MatSelectModule, MatSliderModule, MatDividerModule, MatSidenavModule, MatStepperModule, MatToolbarModule, MatTooltipModule, MatCheckboxModule, MatGridListModule, MatSnackBarModule, MatFormFieldModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatBottomSheetModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatButtonToggleModule, MatPseudoCheckboxModule, MatProgressSpinnerModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MatExpansionModule, MatMenuModule, MatCardModule, MatIconModule, MatLineModule, MatListModule, MatSortModule, MatTabsModule, MatTreeModule, MatBadgeModule, MatChipsModule, MatInputModule, MatRadioModule, MatTableModule, MatButtonModule, MatCommonModule, MatDialogModule, MatOptionModule, MatRippleModule, MatSelectModule, MatSliderModule, MatDividerModule, MatSidenavModule, MatStepperModule, MatToolbarModule, MatTooltipModule, MatCheckboxModule, MatGridListModule, MatSnackBarModule, MatFormFieldModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatBottomSheetModule, MatProgressBarModule, MatSlideToggleModule, MatAutocompleteModule, MatButtonToggleModule, MatPseudoCheckboxModule, MatProgressSpinnerModule, MAT_DATE_LOCALE } from '@angular/material';
 import * as moment from 'moment';
 
 // Routing
@@ -13,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Provider / Services
 import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helper/index';
-import { HttpService, LocalStorageService, AuthenticationService, AlertService, UserService } from './services/index';
+import { HttpService, LocalStorageService, AuthenticationService, AlertService, UserService, ShiftsService, TrainerService } from './services/index';
 // import { routing } from './app.routing';
 
 // Components
@@ -97,7 +96,9 @@ import { AuthGuard } from './guards/index';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'es-AR'},
-    fakeBackendProvider
+    fakeBackendProvider,
+    UserService, 
+    ShiftsService
   ],
   bootstrap: [AppComponent]
 })

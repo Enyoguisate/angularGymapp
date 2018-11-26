@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ACTIVITY_DATA, SHIFT_DATA } from '../../_helper/trainer-data';
 import { Activity, Activities, Shift } from "../../interfaces/index";
 import * as moment from "moment";
+import { UserService } from 'src/app/services';
 
 @Component({  
   selector: 'app-user',
@@ -21,9 +22,13 @@ export class UserComponent implements OnInit {
   private activitySelected: Activity = {};
   
   constructor(
-
+    private userService: UserService
   ) { 
     this.activitiesToShow = this.activityData;
+    this.userService.getUsers().subscribe((response: Response) => {
+      console.log('UserComponent => userService', response);
+
+    });
   }
 
   ngOnInit() {
@@ -62,3 +67,5 @@ export class UserComponent implements OnInit {
 
 
 }
+
+

@@ -7,6 +7,7 @@ import {
 } from "../../_helper/trainer-data";
 import * as moment from "moment";
 import { Trainer, Activity, Activities, Shift, User } from "../../interfaces/index";
+import { HttpService } from '../../services/index';
 
 @Component({
   selector: "app-trainer",
@@ -39,12 +40,18 @@ export class TrainerComponent implements OnInit {
   private trainer: Trainer;
   private shift: Shift;
 
-  constructor() {
-    this.trainerDataToShow =
-      this.trainerData && this.trainerData.length ? this.trainerData : [];
+  constructor(
+    private httpService: HttpService
+  ) {
+    this.trainerDataToShow = this.trainerData && this.trainerData.length ? this.trainerData : [];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('http', );
+    this.httpService.get('107.180.59.131',{}).subscribe((response: Response) => {
+      console.log('response', response);
+    });
+  }
 
   onNameChange(trainerId: number) {
     if (this.previousSelectedTrainer != +trainerId) {
