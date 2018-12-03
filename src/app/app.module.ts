@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Provider / Services
 import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helper/index';
-import { HttpService, LocalStorageService, AuthenticationService, AlertService, UserService, ShiftsService, TrainerService } from './services/index';
+import { HttpService, LocalStorageService, AuthenticationService, AlertService, UserService, ShiftsService, TrainerService, ActivityService } from './services/index';
 // import { routing } from './app.routing';
 
 // Components
@@ -93,12 +93,14 @@ import { AuthGuard } from './guards/index';
     AuthenticationService,
     AlertService,
     // UserService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'es-AR'},
     fakeBackendProvider,
     UserService, 
-    ShiftsService
+    ShiftsService,
+    TrainerService, 
+    ActivityService
   ],
   bootstrap: [AppComponent]
 })

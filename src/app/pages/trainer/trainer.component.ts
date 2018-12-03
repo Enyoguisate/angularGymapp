@@ -48,9 +48,9 @@ export class TrainerComponent implements OnInit {
 
   ngOnInit() {
     console.log('http', );
-    this.httpService.get('107.180.59.131',{}).subscribe((response: Response) => {
-      console.log('response', response);
-    });
+    // this.httpService.get('107.180.59.131',{}).subscribe((response: Response) => {
+    //   console.log('response', response);
+    // });
   }
 
   onNameChange(trainerId: number) {

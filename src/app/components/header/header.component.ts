@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { User } from "src/app/interfaces";
+import { Alumno } from "src/app/interfaces";
 import { Router } from "@angular/router";
-import { AuthenticationService } from "src/app/services";
+import { AuthenticationService, LocalStorageService } from "src/app/services";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-header",
@@ -9,18 +10,33 @@ import { AuthenticationService } from "src/app/services";
   styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnInit {
-  currentUser: User;
+  currentUser: Alumno;
+  showProfesorBtn: boolean = false;
+  showAlumnoBtn: boolean = false;
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private localStorageService: LocalStorageService
   ) {
-    this.authenticationService.currentUser.subscribe(
-      x => (this.currentUser = x)
-    );
+    
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.localStorageService.currentUser.subscribe((currentUser: Alumno) => {
+      console.log('currentUser =>', currentUser);
+      this.currentUser = currentUser;
+        this.localStorageService.getCurrentUserAdminStatus().subscribe((user: Alumno) => {
+          console.log('user', user);
+          if(user){
+            user.usuario === 'admin' ? 
+            (this.showProfesorBtn = true, this.showAlumnoBtn = false ) :
+            (this.showProfesorBtn = false, this.showAlumnoBtn = true );
+          }
+        });
+    });
+    
+  }
 
   logout() {
     this.authenticationService.logout();

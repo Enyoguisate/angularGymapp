@@ -27,10 +27,10 @@ export const ACTIVITIES_DATA: Activities[] = [
 ];
 
 export const ACTIVITY_DATA: Activity[] = [
-  { id: 1, idActivity: 1, name: "Spinning" },
-  { id: 2, idActivity: 2, name: "Zumba" },
-  { id: 3, idActivity: 3, name: "Body Jump" },
-  { id: 4, idActivity: 4, name: "CrossFit" },
+  { idActivity: 1, nombre: "Spinning" },
+  { idActivity: 2, nombre: "Zumba" },
+  { idActivity: 3, nombre: "Body Jump" },
+  { idActivity: 4, nombre: "CrossFit" },
 ]
 
 export const SHIFT_DATA: Shift[] = [

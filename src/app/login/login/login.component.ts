@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AlertService, AuthenticationService } from "../../services/index";
-import { User } from "src/app/interfaces/user.interface";
+import { User, Alumno } from "src/app/interfaces/user.interface";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 
@@ -53,10 +53,21 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
-      .pipe(first()).subscribe(
-        data => {
-          this.router.navigate([this.returnUrl]);
+    this.authenticationService
+      .login(this.f.username.value, this.f.password.value)
+      .subscribe((data: Alumno) => {
+          console.log("data", data);
+          if (data) {
+            if (data.usuario === "admin") {
+              this.returnUrl = "/admin";
+            } else {
+              this.returnUrl = "/user";
+            }
+            this.router.navigate([this.returnUrl]);
+          } else {
+            this.alertService.error("Usuario o contraseña incorrecto");
+            this.loading = false;
+          }
         },
         error => {
           this.alertService.error(error);

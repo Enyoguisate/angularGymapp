@@ -1,9 +1,9 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="true">
   <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">Home</a>
+      <!-- <a class="nav-item nav-link" routerLink="/">Home</a> -->
+      <a class="nav-item nav-link" *ngIf="currentUser && showProfesorBtn" routerLink="/admin">Administrador</a>
+      <a class="nav-item nav-link" *ngIf="currentUser && showAlumnoBtn" routerLink="/user">Alumno</a>
       <a class="nav-item nav-link" (click)="logout()">Logout</a>
-      <a class="nav-item nav-link" routerLink="/trainer">Profesor</a>
-      <a class="nav-item nav-link" routerLink="/user">Alumno</a>
   </div>
 </nav>

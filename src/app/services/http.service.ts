@@ -13,10 +13,8 @@ import { map } from 'rxjs/operators';
 })
 export class HttpService {
 
-  
   private token: string;
-  private httpHeaders = new HttpHeaders({"Content-Type": "application/json",Accept: "application/json"});
-  private headers = new Headers({"Content-Type": "application/json",Accept: "application/json"});
+  private httpHeaders = new HttpHeaders({"Content-Type": "application/json","Accept": "application/json"});
   private options: HttpParamsOptions;
 
   constructor(
@@ -28,26 +26,19 @@ export class HttpService {
 
   get(url: string, params?: any): Observable<any> {
     let qparams = params || {};
-    return this.httpClient.get(url, {
-        headers: this.httpHeaders,
-        params: qparams
-      });
-      // .map((response: Response) => {
-      //   if (response.ok) {
-      //     return response;
-      //   } else {
-      //     return response;
-      //   }
-      // });
-
+    return this.httpClient.get(url, { headers: this.httpHeaders, params: qparams})
+    .pipe(map((response: Response) => {
+        return response;
+      })
+    );
   }
 
-  post(url: string, body: any): Observable<Response> {
-      // return this.httpClient.post(url, body, HttpO);
-      // .map((response: Response) => {
-      //   return response;
-      // });
-      return 
+  post(url: string, body?: any): Observable<any> {
+    return this.httpClient.post(url, body, {})
+      .pipe(map((response: any) => {
+        return response;
+      })
+    );
   }
 
   postRegister(url: string, body: any): Observable<Response> {

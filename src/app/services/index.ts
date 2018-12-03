@@ -5,3 +5,4 @@ export { AlertService } from './alert.service';
 export { UserService } from './user.service';
 export { ShiftsService } from './shifts.service';
 export { TrainerService } from './trainer.service';
+export { ActivityService } from './activity.service';

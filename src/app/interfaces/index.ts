@@ -1,6 +1,5 @@
-export { User } from './user.interface';
+export { User, Alumno, AlumnoApiResponse } from './user.interface';
 export { Trainer } from './trainer.interface';
-export { Activity } from './activity.interface';
+export { Activity, ActivityResponseFromApi } from './activity.interface';
 export { Activities } from './activities.interface';
-export { Shift } from './shift.interface';
-export { ShiftInformation } from './shift-information.interface';
+export { Shift, ShiftResponseFromApi, ShiftInformation, Turno } from './shift.interface';

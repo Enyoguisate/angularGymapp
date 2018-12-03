@@ -2,6 +2,12 @@
   <div class="row">
     <div class="col-md-6" text-center>
       <h4>Actividades</h4>
+      <ol *ngIf="usersFromApi && usersFromApi.length != 0">
+        <li *ngFor="let user of usersFromApi">
+            {{user.nombre}}
+        </li>
+
+      </ol>
       <mat-form-field>
         <select
           matNativeControl
@@ -14,7 +20,7 @@
             [value]="activity.idActivity"
             *ngFor="let activity of activitiesToShow"
           >
-            {{ activity.name }}
+            {{ activity.nombre }}
           </option>
         </select>
       </mat-form-field>
@@ -30,7 +36,7 @@
       </div>
       <div
         *ngIf="
-          activityDate &&
+          activityDateSelected &&
           activitiesAvailable &&
           activitiesAvailable.length === 0
         "

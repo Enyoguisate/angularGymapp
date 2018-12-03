@@ -6,3 +6,17 @@ export interface User {
     lastName?: string;
     token?: string;
   }
+
+  export interface Alumno {
+    contrasena: string;
+    idalumno: string;
+    nombre: string;
+    promocion: string;
+    usuario: string;
+    vencimiento: string;
+  }
+
+  export interface AlumnoApiResponse {
+    alumno: Alumno[];
+    success: number;
+  }

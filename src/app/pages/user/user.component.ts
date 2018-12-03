@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ACTIVITY_DATA, SHIFT_DATA } from '../../_helper/trainer-data';
-import { Activity, Activities, Shift } from "../../interfaces/index";
+import { Activity, Shift, Alumno, AlumnoApiResponse, ActivityResponseFromApi, 
+  ShiftResponseFromApi, Turno  } from "../../interfaces/index";
 import * as moment from "moment";
-import { UserService } from 'src/app/services';
+import { UserService, ActivityService, ShiftsService } from 'src/app/services';
 
 @Component({  
   selector: 'app-user',
@@ -19,19 +20,43 @@ export class UserComponent implements OnInit {
   public showScheduledClasses: boolean = false;
   public shiftData: Shift[] = SHIFT_DATA;
   private dateSelected: string = '';
-  private activitySelected: Activity = {};
-  
+  public usersFromApi: Alumno[] ;
+  public activitiesFromApi: Activity[];
+  public shiftsFromApi: Turno[];
+  public usersByTurn: any;
+
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private activityService: ActivityService,
+    private shiftsService: ShiftsService,
   ) { 
     this.activitiesToShow = this.activityData;
-    this.userService.getUsers().subscribe((response: Response) => {
-      console.log('UserComponent => userService', response);
-
-    });
+    this.serviceRequests();
   }
 
   ngOnInit() {
+  }
+
+  serviceRequests(){
+    this.userService.getUsers().subscribe((response: AlumnoApiResponse) => {
+      this.usersFromApi = response.alumno;
+      console.log('this.usersFromApi', this.usersFromApi);
+    });
+    this.activityService.getAllActivities().subscribe((response: ActivityResponseFromApi) => {
+      this.activitiesFromApi = response.actividad;
+      console.log('this.activitiesFromApi', this.activitiesFromApi);
+    });
+    let idActivity = 1;
+    let day = '20181126';
+    this.shiftsService.getShiftByIdAndDate(idActivity, day).subscribe((response: ShiftResponseFromApi) => {
+      this.shiftsFromApi = response.turno;
+      console.log('getShiftByIdAndDate ===> shiftsFromApi', this.shiftsFromApi);
+    });
+    this.userService.getUsersByShift(1).subscribe((response: ShiftResponseFromApi) => {
+      this.usersByTurn = response;
+      console.log('this.usersByTurn', this.usersByTurn);
+      
+    })
   }
   
   onActivityChange($event){

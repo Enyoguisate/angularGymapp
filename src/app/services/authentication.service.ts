@@ -1,41 +1,77 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { User } from '../interfaces/index';
+import { User, AlumnoApiResponse, Alumno } from '../interfaces/index';
+import { URL_CONECTIONS } from "./url-connections";
+import { UserService } from './user.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+    private _connection_string = URL_CONECTIONS;
+    private url: string = this._connection_string.url;
 
-    constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+    constructor(
+        private userService: UserService,
+        private localStorageService: LocalStorageService
+        ) {
     }
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
+    public get currentUserValue(): Alumno {
+        return this.localStorageService.getUserFromStorage();
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`http://localhost:4000/users/authenticate`, { username, password })
-            .pipe(map(user => {
-                // login successful if there's a jwt token in the response
-                if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    this.currentUserSubject.next(user);
-                }
+        return this.matchUserCredentials(username, password).pipe(map((response: Alumno) => {
+            return response;
+          })
+        );;
+    }
 
-                return user;
-            }));
+    public matchUserCredentials(username: string, password: string): Observable<any>{
+        let alumnoResponse: Alumno = null;
+        return this.userService.getUsers().pipe(map((response: AlumnoApiResponse) => {
+            response.alumno.forEach((alumno: Alumno) => {
+                if(alumno.usuario === username && alumno.contrasena === password){
+                    alumnoResponse = alumno;
+                    this.localStorageService.setUserToStorage(alumno);
+                    this.localStorageService.setCurrentUserSubject(alumno);
+                } else {
+                    if(!alumnoResponse){
+                        alumnoResponse =  null;
+                    }
+                }
+            });
+            console.log('alumnoResponse', alumnoResponse);
+            return alumnoResponse;
+          })
+        );
     }
 
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
+        this.localStorageService.removeCurrentUser();
     }
+
+    // private matchUserCredentials(username: string, password: string){
+    //     let alumnoResponse: Alumno = null;
+    //     return new Observable<Alumno>( observer => {
+    //         this.userService.getUsers().subscribe((response: AlumnoApiResponse) => {
+    //             response.alumno.forEach((alumno: Alumno) => {
+    //                 if(alumno.usuario === username && alumno.contrasena === password){
+    //                     alumnoResponse = alumno;
+    //                     this.localStorageService.setUserToStorage(alumno);
+    //                     this.localStorageService.setCurrentUserSubject(alumno);
+    //                 } else {
+    //                     if(!alumnoResponse){
+    //                         alumnoResponse =  null;
+    //                     }
+    //                 }
+    //             });
+    //             console.log('alumnoResponse', alumnoResponse);
+    //             observer.next(alumnoResponse);
+    //         });
+
+    //     }) 
+    // }
 }

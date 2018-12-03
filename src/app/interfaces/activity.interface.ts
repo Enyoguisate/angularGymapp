@@ -1,5 +1,10 @@
 export interface Activity {
-    id?: number;
     idActivity?: number;
-    name?: string;
+    nombre?: string;
+  }
+
+
+  export interface ActivityResponseFromApi {
+    actividad: Activity[];
+    success: number;
   }
