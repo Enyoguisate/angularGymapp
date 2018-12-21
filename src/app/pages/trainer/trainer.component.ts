@@ -6,8 +6,8 @@ import {
   USERS_DATA
 } from "../../_helper/trainer-data";
 import * as moment from "moment";
-import { Trainer, Activity, Activities, Shift, User } from "../../interfaces/index";
-import { HttpService } from '../../services/index';
+import { Trainer, AlumnosPorTurnoTrainer, TurnoAlumnosPorTurnoTrainer, Activity, Activities, Shift, User, ActivityResponseFromApi, Turno, ShiftResponseFromApi } from "../../interfaces/index";
+import { TrainerService } from '../../services/index';
 
 @Component({
   selector: "app-trainer",
@@ -41,16 +41,23 @@ export class TrainerComponent implements OnInit {
   private shift: Shift;
 
   constructor(
-    private httpService: HttpService
+    private trainerService: TrainerService
   ) {
     this.trainerDataToShow = this.trainerData && this.trainerData.length ? this.trainerData : [];
   }
 
   ngOnInit() {
-    console.log('http', );
-    // this.httpService.get('107.180.59.131',{}).subscribe((response: Response) => {
-    //   console.log('response', response);
-    // });
+    this.trainerService.getAlumnosPorTurno(9).subscribe((response: AlumnosPorTurnoTrainer ) => {
+      console.log('response alumnos por turno', response.turno);
+    });
+
+    this.trainerService.getActividades().subscribe((response: ActivityResponseFromApi)=> {
+      console.log('response actividades', response.actividad);
+    });
+
+    this.trainerService.getTurnos(1).subscribe((response: ShiftResponseFromApi  ) => {
+      console.log('response turnos', response);
+    });
   }
 
   onNameChange(trainerId: number) {

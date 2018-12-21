@@ -14,6 +14,7 @@ export interface User {
     promocion: string;
     usuario: string;
     vencimiento: string;
+    token?: string;
   }
 
   export interface AlumnoApiResponse {

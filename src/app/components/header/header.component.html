@@ -1,9 +1,15 @@
 <!-- nav -->
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="true">
-  <div class="navbar-nav">
-      <!-- <a class="nav-item nav-link" routerLink="/">Home</a> -->
-      <a class="nav-item nav-link" *ngIf="currentUser && showProfesorBtn" routerLink="/admin">Administrador</a>
-      <a class="nav-item nav-link" *ngIf="currentUser && showAlumnoBtn" routerLink="/user">Alumno</a>
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
+  <div class="navbar-nav" style="width: 100%;">
+    <!-- <a class="nav-item nav-link" routerLink="/">Home</a> -->
+    <div class="row" style="width: 100%;">
+      <!-- <div class="col col-9" style="text-align: left;"> -->
+        <!-- <a class="nav-item nav-link" *ngIf="currentUser && showProfesorBtn" routerLink="/admin">Administrador</a>
+        <a class="nav-item nav-link" *ngIf="currentUser && showAlumnoBtn" routerLink="/user">Alumno</a> -->
+      <!-- </div> -->
+      <div class="col col-12" style="text-align: right; margin-right: -50%;">
+        <a class="nav-item nav-link " (click)="logout()">Logout</a>
+      </div>  
+    </div>
   </div>
 </nav>

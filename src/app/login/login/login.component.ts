@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
             } else {
               this.returnUrl = "/user";
             }
+            console.log('navigate', );
             this.router.navigate([this.returnUrl]);
           } else {
             this.alertService.error("Usuario o contraseña incorrecto");
